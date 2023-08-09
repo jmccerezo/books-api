@@ -5,8 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Book } from './schemas/book.schema';
-import * as mongoose from 'mongoose';
-import { Query } from 'express-serve-static-core';
+import mongoose from 'mongoose';
 import { User } from 'src/auth/schemas/user.schema';
 
 @Injectable()
@@ -24,13 +23,29 @@ export class BookService {
     return newBook;
   }
 
-  async getAllBooks(query: Query): Promise<Book[]> {
+  async getAllBooks(query): Promise<Book[]> {
     const keyword = query.keyword
       ? {
-          title: {
-            $regex: query.keyword,
-            $options: 'i',
-          },
+          $or: [
+            {
+              title: {
+                $regex: query.keyword,
+                $options: 'i',
+              },
+            },
+            {
+              description: {
+                $regex: query.keyword,
+                $options: 'i',
+              },
+            },
+            {
+              author: {
+                $regex: query.keyword,
+                $options: 'i',
+              },
+            },
+          ],
         }
       : {};
 
