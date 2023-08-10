@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 import mongoose from 'mongoose';
 import { User } from 'src/auth/schemas/user.schema';
 
@@ -21,21 +22,27 @@ export enum Category {
   timestamps: true,
 })
 export class Book {
+  @ApiProperty()
   @Prop()
   title: string;
 
+  @ApiProperty()
   @Prop()
   description: string;
 
+  @ApiProperty()
   @Prop()
   author: string;
 
+  @ApiProperty()
   @Prop()
   price: number;
 
+  @ApiProperty()
   @Prop()
   category: Category;
 
+  @ApiProperty({ type: 'string' })
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
 }
