@@ -1,18 +1,36 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup-dto';
 import { LoginDto } from './dto/login-dto';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiProperty,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger/dist';
 
+class Token {
+  @ApiProperty()
+  token: string;
+}
+
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('/signup')
+  @Post('signup')
+  @HttpCode(201)
+  @ApiCreatedResponse({ type: Token })
   signUp(@Body() signUpDto: SignUpDto): Promise<{ token: string }> {
     return this.authService.signUp(signUpDto);
   }
 
-  @Get('/login')
+  @Post('login')
+  @HttpCode(200)
+  @ApiOkResponse({ type: Token })
+  @ApiUnauthorizedResponse({ description: 'Incorrect email or password.' })
   login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
     return this.authService.login(loginDto);
   }
