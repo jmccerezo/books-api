@@ -20,6 +20,7 @@ import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
+  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger/dist';
@@ -43,8 +44,10 @@ export class BookController {
   @HttpCode(200)
   @ApiOkResponse({ type: Book })
   @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
-  async getAllBooks(@Query() query): Promise<Book[]> {
-    return this.bookService.getAllBooks(query);
+  @ApiQuery({ name: 'keyword', type: String, required: false })
+  @ApiQuery({ name: 'page', type: Number, required: false })
+  async getAllBooks(@Req() req, @Query() query): Promise<Book[]> {
+    return this.bookService.getAllBooks(req.user, query);
   }
 
   @Get(':id')

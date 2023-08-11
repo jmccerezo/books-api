@@ -23,7 +23,7 @@ export class BookService {
     return newBook;
   }
 
-  async getAllBooks(query): Promise<Book[]> {
+  async getAllBooks(user: User, query: any): Promise<Book[]> {
     const keyword = query.keyword
       ? {
           $or: [
@@ -55,6 +55,8 @@ export class BookService {
 
     const books = await this.bookModel
       .find({ ...keyword })
+      .where('user')
+      .equals(user._id)
       .limit(resPerPage)
       .skip(skip);
 
