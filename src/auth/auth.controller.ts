@@ -2,18 +2,15 @@ import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup-dto';
 import { LoginDto } from './dto/login-dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { Token, Otp } from './return-types';
 import {
   ApiCreatedResponse,
   ApiOkResponse,
-  ApiProperty,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger/dist';
-
-class Token {
-  @ApiProperty()
-  token: string;
-}
 
 @ApiTags('auth')
 @Controller('auth')
@@ -23,7 +20,7 @@ export class AuthController {
   @Post('signup')
   @HttpCode(201)
   @ApiCreatedResponse({ type: Token })
-  signUp(@Body() signUpDto: SignUpDto): Promise<{ token: string }> {
+  async signUp(@Body() signUpDto: SignUpDto): Promise<{ token: string }> {
     return this.authService.signUp(signUpDto);
   }
 
@@ -31,7 +28,25 @@ export class AuthController {
   @HttpCode(200)
   @ApiOkResponse({ type: Token })
   @ApiUnauthorizedResponse({ description: 'Incorrect email or password.' })
-  login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
+  async login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
     return this.authService.login(loginDto);
+  }
+
+  @Post('forgot-password')
+  @HttpCode(200)
+  @ApiOkResponse({ type: Otp })
+  async forgotPassword(
+    @Body() forgotPasswordDto: ForgotPasswordDto,
+  ): Promise<Otp> {
+    return this.authService.forgotPassword(forgotPasswordDto);
+  }
+
+  @Post('reset-password')
+  @HttpCode(200)
+  @ApiOkResponse()
+  async resetPassword(
+    @Body() resetPasswordDto: ResetPasswordDto,
+  ): Promise<string> {
+    return this.authService.resetPassword(resetPasswordDto);
   }
 }
