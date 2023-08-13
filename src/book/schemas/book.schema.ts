@@ -42,7 +42,6 @@ export class Book {
   @Prop()
   category: Category;
 
-  @ApiProperty({ type: 'string' })
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
 }
