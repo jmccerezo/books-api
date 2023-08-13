@@ -21,7 +21,7 @@ export class AuthController {
   @HttpCode(201)
   @ApiCreatedResponse({ type: Token })
   async signUp(@Body() signUpDto: SignUpDto): Promise<{ token: string }> {
-    return this.authService.signUp(signUpDto);
+    return await this.authService.signUp(signUpDto);
   }
 
   @Post('login')
@@ -29,7 +29,7 @@ export class AuthController {
   @ApiOkResponse({ type: Token })
   @ApiUnauthorizedResponse({ description: 'Incorrect email or password.' })
   async login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
-    return this.authService.login(loginDto);
+    return await this.authService.login(loginDto);
   }
 
   @Post('forgot-password')
@@ -38,7 +38,7 @@ export class AuthController {
   async forgotPassword(
     @Body() forgotPasswordDto: ForgotPasswordDto,
   ): Promise<Otp> {
-    return this.authService.forgotPassword(forgotPasswordDto);
+    return await this.authService.forgotPassword(forgotPasswordDto);
   }
 
   @Post('reset-password')
@@ -47,6 +47,6 @@ export class AuthController {
   async resetPassword(
     @Body() resetPasswordDto: ResetPasswordDto,
   ): Promise<string> {
-    return this.authService.resetPassword(resetPasswordDto);
+    return await this.authService.resetPassword(resetPasswordDto);
   }
 }

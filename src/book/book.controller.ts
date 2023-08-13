@@ -37,7 +37,7 @@ export class BookController {
   @ApiCreatedResponse({ type: Book })
   @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
   async createBook(@Body() book: CreateBookDto, @Req() req): Promise<Book> {
-    return this.bookService.createBook(book, req.user);
+    return await this.bookService.createBook(book, req.user);
   }
 
   @Get()
@@ -47,7 +47,7 @@ export class BookController {
   @ApiQuery({ name: 'keyword', type: String, required: false })
   @ApiQuery({ name: 'page', type: Number, required: false })
   async getAllBooks(@Req() req, @Query() query): Promise<Book[]> {
-    return this.bookService.getAllBooks(req.user, query);
+    return await this.bookService.getAllBooks(req.user, query);
   }
 
   @Get(':id')
@@ -55,7 +55,7 @@ export class BookController {
   @ApiOkResponse({ type: Book })
   @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
   async getBookById(@Param('id') id: string): Promise<Book> {
-    return this.bookService.getBookById(id);
+    return await this.bookService.getBookById(id);
   }
 
   @Put(':id')
@@ -66,7 +66,7 @@ export class BookController {
     @Param('id') id: string,
     @Body() book: UpdateBookDto,
   ): Promise<Book> {
-    return this.bookService.updateBook(id, book);
+    return await this.bookService.updateBook(id, book);
   }
 
   @Delete(':id')
@@ -74,6 +74,6 @@ export class BookController {
   @ApiOkResponse({ type: Book })
   @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
   async deleteBook(@Param('id') id: string): Promise<Book> {
-    return this.bookService.deleteBook(id);
+    return await this.bookService.deleteBook(id);
   }
 }
