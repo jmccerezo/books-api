@@ -47,7 +47,7 @@ export class BookController {
   @ApiQuery({ name: 'keyword', type: String, required: false })
   @ApiQuery({ name: 'page', type: Number, required: false })
   async getAllBooks(@Req() req, @Query() query): Promise<Book[]> {
-    return await this.bookService.getAllBooks(req.user, query);
+    return await this.bookService.getAllBooks(req.user._id, query);
   }
 
   @Get(':id')

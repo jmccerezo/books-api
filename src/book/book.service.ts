@@ -6,7 +6,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Book } from './schemas/book.schema';
 import mongoose from 'mongoose';
-import { User } from 'src/auth/schemas/user.schema';
+import { User } from '../auth/schemas/user.schema';
 
 @Injectable()
 export class BookService {
@@ -23,7 +23,7 @@ export class BookService {
     return newBook;
   }
 
-  async getAllBooks(user: User, query: any): Promise<Book[]> {
+  async getAllBooks(user_id: string, query: any): Promise<Book[]> {
     const keyword = query.keyword
       ? {
           $or: [
@@ -56,7 +56,7 @@ export class BookService {
     const books = await this.bookModel
       .find({ ...keyword })
       .where('user')
-      .equals(user._id)
+      .equals(user_id)
       .limit(resPerPage)
       .skip(skip);
 
