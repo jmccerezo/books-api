@@ -80,13 +80,24 @@ export class BookService {
   }
 
   async updateBook(id: string, book: Book): Promise<Book> {
-    return await this.bookModel.findByIdAndUpdate(id, book, {
+    const updatedBook = await this.bookModel.findByIdAndUpdate(id, book, {
       new: true,
-      runValidators: true,
     });
+
+    if (!updatedBook) {
+      throw new NotFoundException('Book not found.');
+    }
+
+    return updatedBook;
   }
 
   async deleteBook(id: string): Promise<Book> {
-    return await this.bookModel.findByIdAndDelete(id);
+    const deletedBook = await this.bookModel.findByIdAndDelete(id);
+
+    if (!deletedBook) {
+      throw new NotFoundException('Book not found.');
+    }
+
+    return deletedBook;
   }
 }
