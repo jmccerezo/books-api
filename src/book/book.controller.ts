@@ -28,7 +28,7 @@ import {
 @ApiBearerAuth()
 @ApiTags('books')
 @Controller('books')
-@UseGuards(AuthGuard())
+@UseGuards(AuthGuard('jwt'))
 export class BookController {
   constructor(private bookService: BookService) {}
 
@@ -36,7 +36,10 @@ export class BookController {
   @HttpCode(201)
   @ApiCreatedResponse({ type: Book })
   @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
-  async createBook(@Body() book: CreateBookDto, @Req() req): Promise<Book> {
+  async createBook(
+    @Body() book: CreateBookDto,
+    @Req() req: any,
+  ): Promise<Book> {
     return await this.bookService.createBook(book, req.user);
   }
 
@@ -46,7 +49,7 @@ export class BookController {
   @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
   @ApiQuery({ name: 'keyword', type: String, required: false })
   @ApiQuery({ name: 'page', type: Number, required: false })
-  async getAllBooks(@Req() req, @Query() query): Promise<Book[]> {
+  async getAllBooks(@Req() req: any, @Query() query: any): Promise<Book[]> {
     return await this.bookService.getAllBooks(req.user._id, query);
   }
 

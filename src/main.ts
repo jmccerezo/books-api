@@ -19,7 +19,6 @@ async function bootstrap() {
     include: [AuthModule, BookModule],
   });
   SwaggerModule.setup('/', app, document, {
-    swaggerOptions: { tagsSorter: 'alpha', operationsSorter: 'alpha' },
     customSiteTitle: 'Books API - Swagger UI',
   });
 

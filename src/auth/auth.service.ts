@@ -4,23 +4,24 @@ import {
   UnauthorizedException,
   ConflictException,
 } from '@nestjs/common';
-import { User } from './schemas/user.schema';
-import { InjectModel } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
 import * as bcrypt from 'bcryptjs';
+import { addMinutes } from 'date-fns';
 import { JwtService } from '@nestjs/jwt/dist';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User } from './schemas/user.schema';
 import { SignUpDto } from './dto/signup-dto';
 import { LoginDto } from './dto/login-dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
-import { addMinutes } from 'date-fns';
-import { Otp, JwtToken } from './return-types';
+import { Jwt } from './types/Jwt';
+import { Otp } from './types/Otp';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name)
-    private userModel: mongoose.Model<User>,
+    private userModel: Model<User>,
     private jwtService: JwtService,
   ) {}
 
@@ -31,19 +32,16 @@ export class AuthService {
     };
   }
 
-  async signUp(signUpDto: SignUpDto): Promise<JwtToken> {
+  async signUp(signUpDto: SignUpDto): Promise<Jwt> {
     const { name, email, password } = signUpDto;
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-      const user = await this.userModel.create({
-        name,
-        email,
-        password: hashedPassword,
-      });
+      const newUser = { name, email, password: hashedPassword };
+      const user = await this.userModel.create(newUser);
 
-      const token = this.jwtService.sign({ id: user._id });
+      const payload = { sub: user._id, name: user.name, email: user.email };
+      const token = this.jwtService.sign(payload);
 
       return { token };
     } catch (error) {
@@ -53,7 +51,7 @@ export class AuthService {
     }
   }
 
-  async login(loginDto: LoginDto): Promise<JwtToken> {
+  async login(loginDto: LoginDto): Promise<Jwt> {
     const { email, password } = loginDto;
 
     const user = await this.userModel.findOne({ email });
@@ -68,7 +66,8 @@ export class AuthService {
       throw new UnauthorizedException('Incorrect email or password.');
     }
 
-    const token = this.jwtService.sign({ id: user._id });
+    const payload = { sub: user._id, name: user.name, email: user.email };
+    const token = this.jwtService.sign(payload);
 
     return { token };
   }
