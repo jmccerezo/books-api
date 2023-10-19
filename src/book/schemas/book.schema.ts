@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ApiProperty } from '@nestjs/swagger';
 import mongoose from 'mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../../auth/schemas/user.schema';
 
 export enum Category {
@@ -22,25 +22,25 @@ export enum Category {
   timestamps: true,
 })
 export class Book {
-  @ApiProperty()
+  @ApiProperty({ example: 'Book Title' })
   @Prop()
   title: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Book Description' })
   @Prop()
   description: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Book Author' })
   @Prop()
   author: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 100 })
   @Prop()
   price: number;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Adventure', enum: Category })
   @Prop()
-  category: Category;
+  category: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
