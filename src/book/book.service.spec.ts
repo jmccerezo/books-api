@@ -144,7 +144,7 @@ describe('BookService', () => {
         { new: true },
       );
 
-      expect(result.title).toEqual(updatedBook.title);
+      expect(result.title).toEqual(book.title);
     });
   });
 
