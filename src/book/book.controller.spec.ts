@@ -4,8 +4,8 @@ import { BookService } from './book.service';
 import { Category } from './schemas/book.schema';
 import { PassportModule } from '@nestjs/passport';
 import { User } from '../auth/schemas/user.schema';
-import { CreateBookDto } from './dto/create-book-dto';
-import { UpdateBookDto } from './dto/update-book-dto';
+import { CreateBookDto } from './dto/create-book.dto';
+import { UpdateBookDto } from './dto/update-book.dto';
 
 describe('BookController', () => {
   let bookController: BookController;

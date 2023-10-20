@@ -4,7 +4,7 @@ import mongoose, { Model } from 'mongoose';
 import { Book, Category } from './schemas/book.schema';
 import { User } from '../auth/schemas/user.schema';
 import { getModelToken } from '@nestjs/mongoose';
-import { CreateBookDto } from './dto/create-book-dto';
+import { CreateBookDto } from './dto/create-book.dto';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('BookService', () => {
