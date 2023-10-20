@@ -141,13 +141,10 @@ describe('BookService', () => {
       expect(bookModel.findByIdAndUpdate).toHaveBeenCalledWith(
         mockBook._id,
         book,
-        {
-          new: true,
-          runValidators: true,
-        },
+        { new: true },
       );
 
-      expect(result.title).toEqual(book.title);
+      expect(result.title).toEqual(updatedBook.title);
     });
   });
 
