@@ -108,7 +108,7 @@ describe('BookController', () => {
         book as UpdateBookDto,
       );
 
-      expect(bookService.getBookById).toHaveBeenCalled();
+      expect(bookService.updateBook).toHaveBeenCalled();
       expect(result).toEqual(updatedBook);
     });
   });
