@@ -9,6 +9,7 @@ import { Jwt } from './types/Jwt';
 import { Otp } from './types/Otp';
 import {
   ApiBadRequestResponse,
+  ApiConflictResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -25,6 +26,7 @@ export class AuthController {
   @HttpCode(201)
   @ApiCreatedResponse({ type: Jwt })
   @ApiBadRequestResponse({ description: 'Error: Bad Request' })
+  @ApiConflictResponse({ description: 'Error: Conflict' })
   async signUp(@Body() signUpDto: SignUpDto): Promise<Jwt> {
     return await this.authService.signUp(signUpDto);
   }
