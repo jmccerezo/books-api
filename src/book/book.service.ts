@@ -73,7 +73,7 @@ export class BookService {
     const book = await this.bookModel.findById(id);
 
     if (!book) {
-      throw new NotFoundException('Book not found.');
+      throw new NotFoundException('Book does not exist.');
     }
 
     return book;
@@ -91,7 +91,7 @@ export class BookService {
     });
 
     if (!updatedBook) {
-      throw new NotFoundException('Book not found.');
+      throw new NotFoundException('Book does not exist.');
     }
 
     return updatedBook;
@@ -107,7 +107,7 @@ export class BookService {
     const deletedBook = await this.bookModel.findByIdAndDelete(id);
 
     if (!deletedBook) {
-      throw new NotFoundException('Book not found.');
+      throw new NotFoundException('Book does not exist.');
     }
 
     return deletedBook;

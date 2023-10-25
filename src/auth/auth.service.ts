@@ -79,7 +79,7 @@ export class AuthService {
     const user = await this.userModel.findOne({ email });
 
     if (!user) {
-      throw new NotFoundException('Email address does not exist.');
+      throw new NotFoundException('Email does not exist.');
     }
 
     const otp = this.generateOtp();
