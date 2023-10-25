@@ -1,8 +1,9 @@
 import {
   Injectable,
   BadRequestException,
-  UnauthorizedException,
   ConflictException,
+  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { addMinutes } from 'date-fns';
@@ -78,7 +79,7 @@ export class AuthService {
     const user = await this.userModel.findOne({ email });
 
     if (!user) {
-      throw new BadRequestException('Invalid email address.');
+      throw new NotFoundException('Email address does not exist.');
     }
 
     const otp = this.generateOtp();
