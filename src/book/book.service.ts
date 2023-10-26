@@ -16,7 +16,7 @@ export class BookService {
   ) {}
 
   async createBook(book: Book, user: User): Promise<Book> {
-    const data = Object.assign(book, { user: user._id });
+    const data = Object.assign(book, { user_id: user._id });
 
     const newBook = await this.bookModel.create(data);
 
@@ -55,7 +55,7 @@ export class BookService {
 
     const books = await this.bookModel
       .find({ ...keyword })
-      .where('user')
+      .where('user_id')
       .equals(user_id)
       .limit(resPerPage)
       .skip(skip);

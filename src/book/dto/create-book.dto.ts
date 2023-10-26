@@ -7,7 +7,6 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Category } from '../schemas/book.schema';
-import { User } from '../../auth/schemas/user.schema';
 
 export class CreateBookDto {
   @ApiProperty({ example: 'Book Title' })
@@ -32,9 +31,9 @@ export class CreateBookDto {
 
   @ApiProperty({ example: 'Adventure', enum: Category })
   @IsNotEmpty()
-  @IsEnum(Category, { message: 'Please enter correct category.' })
+  @IsEnum(Category)
   readonly category: string;
 
   @IsEmpty({ message: 'You cannot pass user id.' })
-  readonly user: User;
+  readonly user_id: undefined;
 }

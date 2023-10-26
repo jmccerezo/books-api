@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { BookService } from './book.service';
 import { Book } from './schemas/book.schema';
+import { BookDto } from './dto/book.dto';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -35,7 +36,7 @@ export class BookController {
 
   @Post()
   @HttpCode(201)
-  @ApiCreatedResponse({ type: Book })
+  @ApiCreatedResponse({ type: BookDto })
   @ApiBadRequestResponse({ description: 'Error: Bad Request' })
   @ApiUnauthorizedResponse({ description: 'Error: Unauthorized' })
   async createBook(
@@ -47,7 +48,7 @@ export class BookController {
 
   @Get()
   @HttpCode(200)
-  @ApiOkResponse({ type: Book })
+  @ApiOkResponse({ type: BookDto, isArray: true })
   @ApiBadRequestResponse({ description: 'Error: Bad Request' })
   @ApiUnauthorizedResponse({ description: 'Error: Unauthorized' })
   @ApiQuery({ name: 'keyword', type: String, required: false })
@@ -58,7 +59,7 @@ export class BookController {
 
   @Get(':id')
   @HttpCode(200)
-  @ApiOkResponse({ type: Book })
+  @ApiOkResponse({ type: BookDto })
   @ApiBadRequestResponse({ description: 'Error: Bad Request' })
   @ApiUnauthorizedResponse({ description: 'Error: Unauthorized' })
   async getBookById(@Param('id') id: string): Promise<Book> {
@@ -67,7 +68,7 @@ export class BookController {
 
   @Put(':id')
   @HttpCode(200)
-  @ApiOkResponse({ type: Book })
+  @ApiOkResponse({ type: BookDto })
   @ApiBadRequestResponse({ description: 'Error: Bad Request' })
   @ApiUnauthorizedResponse({ description: 'Error: Unauthorized' })
   async updateBook(
@@ -79,7 +80,7 @@ export class BookController {
 
   @Delete(':id')
   @HttpCode(200)
-  @ApiOkResponse({ type: Book })
+  @ApiOkResponse({ type: BookDto })
   @ApiBadRequestResponse({ description: 'Error: Bad Request' })
   @ApiUnauthorizedResponse({ description: 'Error: Unauthorized' })
   async deleteBook(@Param('id') id: string): Promise<Book> {
