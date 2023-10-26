@@ -67,7 +67,7 @@ export class BookService {
     const isValidId = isValidObjectId(id);
 
     if (!isValidId) {
-      throw new BadRequestException('Please enter valid id.');
+      throw new BadRequestException('Please enter a valid id.');
     }
 
     const book = await this.bookModel.findById(id);
@@ -83,7 +83,7 @@ export class BookService {
     const isValidId = isValidObjectId(id);
 
     if (!isValidId) {
-      throw new BadRequestException('Please enter valid id.');
+      throw new BadRequestException('Please enter a valid id.');
     }
 
     const updatedBook = await this.bookModel.findByIdAndUpdate(id, book, {
@@ -101,7 +101,7 @@ export class BookService {
     const isValidId = isValidObjectId(id);
 
     if (!isValidId) {
-      throw new BadRequestException('Please enter valid id.');
+      throw new BadRequestException('Please enter a valid id.');
     }
 
     const deletedBook = await this.bookModel.findByIdAndDelete(id);
