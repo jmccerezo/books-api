@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class BookDto {
+export class BookEntity {
   @ApiProperty({ example: '653a07be4c6972dfec6a9c18' })
   readonly _id: string;
 
