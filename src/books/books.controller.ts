@@ -11,7 +11,7 @@ import {
   UseGuards,
   HttpCode,
 } from '@nestjs/common';
-import { BookService } from './book.service';
+import { BooksService } from './books.service';
 import { Book } from './schemas/book.schema';
 import { BookEntity } from './entities/book.entity';
 import { CreateBookDto } from './dto/create-book.dto';
@@ -31,8 +31,8 @@ import {
 @UseGuards(AuthGuard('jwt'))
 @ApiBearerAuth()
 @ApiTags('books')
-export class BookController {
-  constructor(private bookService: BookService) {}
+export class BooksController {
+  constructor(private booksService: BooksService) {}
 
   @Post()
   @HttpCode(201)
@@ -43,7 +43,7 @@ export class BookController {
     @Body() book: CreateBookDto,
     @Req() req: any,
   ): Promise<Book> {
-    return await this.bookService.createBook(book, req.user);
+    return await this.booksService.createBook(book, req.user);
   }
 
   @Get()
@@ -54,7 +54,7 @@ export class BookController {
   @ApiQuery({ name: 'keyword', type: String, required: false })
   @ApiQuery({ name: 'page', type: Number, required: false })
   async getAllBooks(@Req() req: any, @Query() query: any): Promise<Book[]> {
-    return await this.bookService.getAllBooks(req.user._id, query);
+    return await this.booksService.getAllBooks(req.user._id, query);
   }
 
   @Get(':id')
@@ -63,7 +63,7 @@ export class BookController {
   @ApiBadRequestResponse({ description: 'Error: Bad Request' })
   @ApiUnauthorizedResponse({ description: 'Error: Unauthorized' })
   async getBookById(@Param('id') id: string): Promise<Book> {
-    return await this.bookService.getBookById(id);
+    return await this.booksService.getBookById(id);
   }
 
   @Put(':id')
@@ -75,7 +75,7 @@ export class BookController {
     @Param('id') id: string,
     @Body() book: UpdateBookDto,
   ): Promise<Book> {
-    return await this.bookService.updateBook(id, book);
+    return await this.booksService.updateBook(id, book);
   }
 
   @Delete(':id')
@@ -84,6 +84,6 @@ export class BookController {
   @ApiBadRequestResponse({ description: 'Error: Bad Request' })
   @ApiUnauthorizedResponse({ description: 'Error: Unauthorized' })
   async deleteBook(@Param('id') id: string): Promise<Book> {
-    return await this.bookService.deleteBook(id);
+    return await this.booksService.deleteBook(id);
   }
 }

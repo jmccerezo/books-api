@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BookService } from './book.service';
+import { BooksService } from './books.service';
 import mongoose, { Model } from 'mongoose';
 import { Book, Category } from './schemas/book.schema';
 import { User } from '../auth/schemas/user.schema';
@@ -7,8 +7,8 @@ import { getModelToken } from '@nestjs/mongoose';
 import { CreateBookDto } from './dto/create-book.dto';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 
-describe('BookService', () => {
-  let bookService: BookService;
+describe('BooksService', () => {
+  let bookService: BooksService;
   let bookModel: Model<Book>;
 
   const mockBook = {
@@ -38,12 +38,12 @@ describe('BookService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        BookService,
+        BooksService,
         { provide: getModelToken(Book.name), useValue: mockBookService },
       ],
     }).compile();
 
-    bookService = module.get<BookService>(BookService);
+    bookService = module.get<BooksService>(BooksService);
     bookModel = module.get<Model<Book>>(getModelToken(Book.name));
   });
 

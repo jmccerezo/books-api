@@ -9,7 +9,7 @@ import { Book } from './schemas/book.schema';
 import { User } from '../auth/schemas/user.schema';
 
 @Injectable()
-export class BookService {
+export class BooksService {
   constructor(
     @InjectModel(Book.name)
     private bookModel: Model<Book>,

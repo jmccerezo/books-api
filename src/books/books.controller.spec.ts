@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BookController } from './book.controller';
-import { BookService } from './book.service';
+import { BooksController } from './books.controller';
+import { BooksService } from './books.service';
 import { Category } from './schemas/book.schema';
 import { PassportModule } from '@nestjs/passport';
 import { User } from '../auth/schemas/user.schema';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 
-describe('BookController', () => {
-  let bookController: BookController;
-  let bookService: BookService;
+describe('BooksController', () => {
+  let bookController: BooksController;
+  let bookService: BooksService;
 
   const mockBook = {
     _id: '64dada20aa6b96af74cd6a1c',
@@ -38,12 +38,12 @@ describe('BookController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [PassportModule.register({ defaultStrategy: 'jwt' })],
-      controllers: [BookController],
-      providers: [{ provide: BookService, useValue: mockBookService }],
+      controllers: [BooksController],
+      providers: [{ provide: BooksService, useValue: mockBookService }],
     }).compile();
 
-    bookController = module.get<BookController>(BookController);
-    bookService = module.get<BookService>(BookService);
+    bookController = module.get<BooksController>(BooksController);
+    bookService = module.get<BooksService>(BooksService);
   });
 
   it('should be defined', () => {
