@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AuthModule } from './auth/auth.module';
-import { BookModule } from './book/book.module';
+import { BooksModule } from './books/books.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,7 +16,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config, {
-    include: [AuthModule, BookModule],
+    include: [AuthModule, BooksModule],
   });
   SwaggerModule.setup('/', app, document, {
     customSiteTitle: 'Books API - Swagger UI',
