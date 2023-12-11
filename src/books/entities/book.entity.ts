@@ -20,7 +20,7 @@ export class BookEntity {
   readonly category: string;
 
   @ApiProperty({ example: '653104532155727dc31faeac' })
-  readonly user_id: string;
+  readonly user: string;
 
   @ApiProperty({ example: '2023-10-26T06:31:26.979Z' })
   readonly createdAt: Date;

@@ -35,5 +35,5 @@ export class CreateBookDto {
   readonly category: string;
 
   @IsEmpty({ message: 'You cannot pass user id.' })
-  readonly user_id: undefined;
+  readonly user: undefined;
 }
