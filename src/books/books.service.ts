@@ -104,7 +104,9 @@ export class BooksService {
       throw new BadRequestException('Please enter a valid id.');
     }
 
-    const deletedBook = await this.bookModel.findByIdAndDelete(id);
+    const deletedBook = await this.bookModel.findByIdAndDelete(id, {
+      new: true,
+    });
 
     if (!deletedBook) {
       throw new NotFoundException('Book does not exist.');
